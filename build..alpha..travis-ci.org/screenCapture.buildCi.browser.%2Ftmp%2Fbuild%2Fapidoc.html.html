@@ -1,4 +1,4 @@
-<div class="apidocDiv">
+<html><head></head><body><div class="apidocDiv">
 <style>
 /*csslint
 */
@@ -47,17 +47,10 @@
 }
 </style>
 <h1>api documentation for
-    <a
-
-        href="https://github.com/andrewrk/connect-proxy#readme"
-
-    >proxy-middleware (v0.15.0)</a>
+    <a href="https://github.com/andrewrk/connect-proxy#readme">proxy-middleware (v0.15.0)</a>
 </h1>
 <h4>http(s) proxy as connect middleware</h4>
-<div class="apidocSectionDiv"><a
-    href="#apidoc.tableOfContents"
-    id="apidoc.tableOfContents"
-><h1>table of contents</h1></a><ol>
+<div class="apidocSectionDiv"><a href="#apidoc.tableOfContents" id="apidoc.tableOfContents"><h1>table of contents</h1></a><ol>
 
     <li class="apidocModuleLi"><a href="#apidoc.module.proxy-middleware">module proxy-middleware</a><ol>
 
@@ -87,24 +80,24 @@
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function proxyMiddleware(options) {
   //enable ability to quickly pass a url for shorthand setup
-  if(typeof options === &#x27;string&#x27;){
-      options = require(&#x27;url&#x27;).parse(options);
+  if(typeof options === 'string'){
+      options = require('url').parse(options);
   }
 
-  var httpLib = options.protocol === &#x27;https:&#x27; ? https : http;
+  var httpLib = options.protocol === 'https:' ? https : http;
   var request = httpLib.request;
 
   options = options || {};
   options.hostname = options.hostname;
   options.port = options.port;
-  options.pathname = options.pathname || &#x27;/&#x27;;
+  options.pathname = options.pathname || '/';
 
   return function (req, resp, next) {
     var url = req.url;
     // You can pass the route within the options, as well
-    if (typeof options.route === &#x27;string&#x27;) {
+    if (typeof options.route === 'string') {
       if (url === options.route) {
-        url = &#x27;&#x27;;
+        url = '';
       } else if (url.slice(0, options.route.length) === options.route) {
         url = url.slice(options.route.length);
       } else {
@@ -114,8 +107,8 @@
 
     //options for this request
     var opts = extend({}, options);
-    if (url &#x26;&#x26; url.charAt(0) === &#x27;?&#x27;) { // prevent /api/resource/?offset=0
-      if (options.pathname.length &#x3e; 1 &#x26;&#x26; options.pathname.charAt(options.pathname.length - 1) === &#x27;/&#x27;) {
+    if (url &amp;&amp; url.charAt(0) === '?') { // prevent /api/resource/?offset=0
+      if (options.pathname.length &gt; 1 &amp;&amp; options.pathname.charAt(options.pathname.length - 1) === '/') {
         opts.path = options.pathname.substring(0, options.pathname.length - 1) + url;
       } else {
         opts.path = options.pathname + url;
@@ -140,19 +133,19 @@
         , headers = myRes.headers
         , location = headers.location;
       // Fix the location
-      if (((statusCode &#x3e; 300 &#x26;&#x26; statusCode &#x3c; 304) || statusCode === 201) &#x26;&#x26; location &#x26;&#x26; location.indexOf(options.href) &#x3e; -1) {
+      if (((statusCode &gt; 300 &amp;&amp; statusCode &lt; 304) || statusCode === 201) &amp;&amp; location &amp;&amp; location.indexOf(options.href) &gt; -1) {
         // absoulte path
-        headers.location = location.replace(options.href, slashJoin(&#x27;/&#x27;, slashJoin((options.route || &#x27;&#x27;), &#x27;&#x27;)));
+        headers.location = location.replace(options.href, slashJoin('/', slashJoin((options.route || ''), '')));
       }
       applyViaHeader(myRes.headers, opts, myRes.headers);
       rewriteCookieHosts(myRes.headers, opts, myRes.headers, req);
       resp.writeHead(myRes.statusCode, myRes.headers);
-      myRes.on(&#x27;error&#x27;, function (err) {
+      myRes.on('error', function (err) {
         next(err);
       });
       myRes.pipe(resp);
     });
-    myReq.on(&#x27;error&#x27;, function (err) {
+    myReq.on('error', function (err) {
       next(err);
     });
     if (!req.readable) {
@@ -174,3 +167,4 @@
     ]
 </div>
 </div>
+</body></html>
